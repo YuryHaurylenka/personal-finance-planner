@@ -1,12 +1,10 @@
 import uuid
 from typing import Optional
 
-from pydantic import EmailStr
-
-from src.core.config import Base
+from pydantic import BaseModel, EmailStr
 
 
-class UserBase(Base):
+class UserBase(BaseModel):
     user_id: uuid.UUID
     username: str
     email: EmailStr
