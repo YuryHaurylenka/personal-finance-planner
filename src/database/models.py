@@ -1,8 +1,7 @@
-import uuid
-
 from sqlalchemy import Boolean, Column, DateTime, Float, ForeignKey, String, Text
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import declared_attr, relationship
+import uuid
 
 from .base import Base
 
@@ -14,6 +13,10 @@ class User(Base):
     username = Column(String, nullable=False)
     email = Column(String, nullable=False, unique=True)
     is_active = Column(Boolean, nullable=False, default=True)
+
+    transactions = relationship("Transaction", back_populates="user")
+    goals = relationship("Goal", back_populates="user")
+    budgets = relationship("Budget", back_populates="user")
 
     def __repr__(self):
         return f"<User name={self.username} email={self.email}>"
