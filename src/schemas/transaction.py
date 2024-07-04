@@ -1,7 +1,10 @@
-from pydantic import BaseModel, ConfigDict, Field
+import uuid
 from datetime import datetime
 from typing import Optional
-import uuid
+
+from pydantic import BaseModel, ConfigDict, field_validator
+
+from src.utils.dependencies.parse_timestamp import parse_timestamp
 
 
 class TransactionBase(BaseModel):
@@ -9,6 +12,12 @@ class TransactionBase(BaseModel):
     timestamp: datetime
     description: Optional[str] = None
     category_id: Optional[int] = None
+
+    @field_validator("timestamp", mode="before")
+    def validate_timestamp(cls, value):
+        if isinstance(value, str):
+            return parse_timestamp(value)
+        return value
 
 
 class TransactionCreate(TransactionBase):

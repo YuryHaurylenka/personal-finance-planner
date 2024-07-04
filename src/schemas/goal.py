@@ -2,7 +2,9 @@ import uuid
 from datetime import datetime
 from typing import Optional
 
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, field_validator
+
+from src.utils.dependencies.parse_timestamp import parse_timestamp
 
 
 class GoalBase(BaseModel):
@@ -10,6 +12,12 @@ class GoalBase(BaseModel):
     description: str
     target_date: datetime
     category_id: Optional[int] = None
+
+    @field_validator("target_date", mode="before")
+    def validate_timestamp(cls, value):
+        if isinstance(value, str):
+            return parse_timestamp(value)
+        return value
 
 
 class GoalCreate(GoalBase):
