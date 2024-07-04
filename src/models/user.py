@@ -7,16 +7,16 @@ from sqlalchemy import (
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
 
-from src.database.config import Base
+from src.core.config import Base
 
 
 class User(Base):
     __tablename__ = "users"
 
     user_id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    username = Column(String, nullable=False, unique=True)
-    email = Column(String, nullable=False, unique=True)
-    password = Column(String, nullable=False)
+    username = Column(String(32), nullable=False, unique=True)
+    email = Column(String(32), nullable=False, unique=True)
+    password = Column(String(32), nullable=False)
 
     transactions = relationship("Transaction", back_populates="user")
     goals = relationship("Goal", back_populates="user")

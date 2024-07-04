@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.crud import user as crud_user
-from src.database import db_helper
+from src.core import db_helper
 from src.schemas.user import User, UserCreate, UserUpdate, UserUpdatePartial
 from src.utils.dependencies.user_dependencies import user_by_id
 

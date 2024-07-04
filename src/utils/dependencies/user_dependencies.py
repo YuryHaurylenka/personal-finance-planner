@@ -4,7 +4,8 @@ from typing import Annotated
 from fastapi import Path, Depends, HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
 from src.crud import user as crud_user
-from src.database import User, db_helper
+from src.core import db_helper
+from src.models import User
 
 
 async def user_by_id(

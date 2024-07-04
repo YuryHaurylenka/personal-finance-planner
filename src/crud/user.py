@@ -4,7 +4,7 @@ from sqlalchemy import select
 from sqlalchemy.engine import Result
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from src.database.models import User
+from src.models.user import User
 from src.schemas.user import UserCreate, UserUpdate, UserUpdatePartial
 
 
