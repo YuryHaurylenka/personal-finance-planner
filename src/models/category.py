@@ -11,7 +11,7 @@ class Category(Base):
     name = Column(String(50), unique=True, nullable=False)
 
     transactions = relationship("Transaction", back_populates="category")
-    budgets = relationship("Budget", back_populates="category")
+    goals = relationship("Goal", back_populates="category")
 
     def __repr__(self):
         return f"<Category id={self.category_id} name={self.name}>"
