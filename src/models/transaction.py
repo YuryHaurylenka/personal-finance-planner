@@ -17,13 +17,13 @@ class Transaction(Base):
 
     transaction_id = Column(Integer, primary_key=True, autoincrement=True)
     user_id = Column(UUID(as_uuid=True), ForeignKey("users.user_id"), nullable=False)
-    # category_id = Column(Integer, ForeignKey("categories.category_id"), nullable=True)
+    category_id = Column(Integer, ForeignKey("categories.category_id"), nullable=True)
     amount = Column(Float, nullable=False)
     timestamp = Column(DateTime, nullable=False)
     description = Column(Text, nullable=True)
 
     user = relationship("User", back_populates="transactions")
-    # category = relationship("Category", back_populates="transactions")
+    category = relationship("Category", back_populates="transactions")
 
     def __repr__(self):
         return f"<Transaction id={self.transaction_id} amount={self.amount}>"

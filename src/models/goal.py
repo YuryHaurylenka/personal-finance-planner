@@ -17,13 +17,13 @@ class Goal(Base):
 
     goal_id = Column(Integer, primary_key=True, autoincrement=True)
     user_id = Column(UUID(as_uuid=True), ForeignKey("users.user_id"), nullable=False)
-    # category_id = Column(Integer, ForeignKey("categories.category_id"), nullable=True)
+    category_id = Column(Integer, ForeignKey("categories.category_id"), nullable=True)
     amount = Column(Float, nullable=False, default=0.0)
     description = Column(Text, nullable=False)
     target_date = Column(DateTime, nullable=False)
 
     user = relationship("User", back_populates="goals")
-    # category = relationship("Category", back_populates="transactions")
+    category = relationship("Category", back_populates="goals")
 
     def __repr__(self):
         return f"<Goal id={self.goal_id} amount={self.amount}>"
