@@ -1,0 +1,28 @@
+import uuid
+
+from sqlalchemy import (
+    Column,
+    DateTime,
+    Float,
+    ForeignKey,
+    Text,
+)
+from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy.orm import relationship
+
+from src.database.config import Base
+
+
+class Goal(Base):
+    __tablename__ = "goals"
+
+    goal_id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    user_id = Column(UUID(as_uuid=True), ForeignKey("users.user_id"), nullable=False)
+    amount = Column(Float, nullable=False)
+    description = Column(Text, nullable=False)
+    target_date = Column(DateTime, nullable=False)
+
+    user = relationship("User", back_populates="goals")
+
+    def __repr__(self):
+        return f"<Goal id={self.goal_id} amount={self.amount}>"
