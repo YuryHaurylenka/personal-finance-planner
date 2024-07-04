@@ -9,7 +9,7 @@ from sqlalchemy import (
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
 
-from src.core.config import Base
+from .base import Base
 
 
 class Budget(Base):
