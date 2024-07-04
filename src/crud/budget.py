@@ -21,9 +21,7 @@ async def get_budget(session: AsyncSession, budget_id: int) -> Budget | None:
     return await session.get(Budget, budget_id)
 
 
-async def create_budget(
-    session: AsyncSession, category_in: BudgetCreate
-) -> Budget:
+async def create_budget(session: AsyncSession, category_in: BudgetCreate) -> Budget:
     budget = Budget(**category_in.model_dump())
     session.add(budget)
     await session.commit()

@@ -1,11 +1,4 @@
-__all__ = (
-    "User",
-    "Transaction",
-    "Budget",
-    "Goal",
-    "Transaction",
-    "Base",
-)
+__all__ = ("User", "Transaction", "Budget", "Goal", "Transaction", "Base", "Category")
 
 from .user import User
 from .transaction import Transaction

@@ -30,9 +30,7 @@ async def create_goal(
     goal_in: GoalCreate,
     session: AsyncSession = Depends(db_helper.scoped_session_dependency),
 ):
-    return await crud_goal.create_goal(
-        session=session, goal_in=goal_in
-    )
+    return await crud_goal.create_goal(session=session, goal_in=goal_in)
 
 
 @router.get("/{goal_id}/", response_model=Goal)
