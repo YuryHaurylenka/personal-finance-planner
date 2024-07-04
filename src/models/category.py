@@ -1,7 +1,4 @@
-import uuid
-
-from sqlalchemy import Column, String
-from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy import Column, Integer, String
 from sqlalchemy.orm import relationship
 
 from src.core.config import Base
@@ -10,7 +7,7 @@ from src.core.config import Base
 class Category(Base):
     __tablename__ = "categories"
 
-    category_id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    category_id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String(50), unique=True, nullable=False)
 
     transactions = relationship("Transaction", back_populates="category")
