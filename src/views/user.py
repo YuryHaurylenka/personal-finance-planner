@@ -1,6 +1,4 @@
-import uuid
-
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.crud import user as crud_user
@@ -18,7 +16,11 @@ async def get_users(
     return await crud_user.get_users(session=session)
 
 
-@router.post("/", response_model=User)
+@router.post(
+    "/",
+    response_model=User,
+    status_code=status.HTTP_201_CREATED,
+)
 async def create_user(
     user_in: UserCreate,
     session: AsyncSession = Depends(db_helper.scoped_session_dependency),
@@ -28,17 +30,9 @@ async def create_user(
 
 @router.get("/{user_id}/", response_model=User)
 async def get_user(
-    user_id: uuid.UUID,
-    session: AsyncSession = Depends(db_helper.scoped_session_dependency),
+    user: User = Depends(user_by_id),
 ):
-    user = await crud_user.get_user(user_id=user_id, session=session)
-    if user is not None:
-        return user
-
-    raise HTTPException(
-        status_code=status.HTTP_404_NOT_FOUND,
-        detail=f"User {user_id} not found!",
-    )
+    return user
 
 
 @router.put("/{user_id}/")
