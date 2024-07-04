@@ -16,7 +16,7 @@ class User(Base):
     user_id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     username = Column(String(32), nullable=False, unique=True)
     email = Column(String(32), nullable=False, unique=True)
-    password = Column(String(32), nullable=False)
+    password = Column(String(255), nullable=False)
 
     transactions = relationship("Transaction", back_populates="user")
     goals = relationship("Goal", back_populates="user")
