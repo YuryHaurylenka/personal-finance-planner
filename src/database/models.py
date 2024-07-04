@@ -1,18 +1,27 @@
-from sqlalchemy import Boolean, Column, DateTime, Float, ForeignKey, String, Text
-from sqlalchemy.dialects.postgresql import UUID
-from sqlalchemy.orm import declared_attr, relationship
 import uuid
 
-from .base import Base
+from sqlalchemy import (
+    Column,
+    DateTime,
+    Float,
+    ForeignKey,
+    String,
+    Text,
+)
+from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import relationship
+
+Base = declarative_base()
 
 
 class User(Base):
     __tablename__ = "users"
 
     user_id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    username = Column(String, nullable=False)
+    username = Column(String, nullable=False, unique=True)
     email = Column(String, nullable=False, unique=True)
-    is_active = Column(Boolean, nullable=False, default=True)
+    password = Column(String, nullable=False)
 
     transactions = relationship("Transaction", back_populates="user")
     goals = relationship("Goal", back_populates="user")
@@ -23,9 +32,7 @@ class User(Base):
 
 
 class Transaction(Base):
-    @declared_attr.directive
-    def __tablename__(cls):
-        return f"{cls.__name__.lower()}s"
+    __tablename__ = "transactions"
 
     transaction_id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     user_id = Column(UUID(as_uuid=True), ForeignKey("users.user_id"), nullable=False)
@@ -35,11 +42,12 @@ class Transaction(Base):
 
     user = relationship("User", back_populates="transactions")
 
+    def __repr__(self):
+        return f"<Transaction id={self.transaction_id} amount={self.amount}>"
+
 
 class Goal(Base):
-    @declared_attr.directive
-    def __tablename__(cls):
-        return f"{cls.__name__.lower()}s"
+    __tablename__ = "goals"
 
     goal_id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     user_id = Column(UUID(as_uuid=True), ForeignKey("users.user_id"), nullable=False)
@@ -49,11 +57,12 @@ class Goal(Base):
 
     user = relationship("User", back_populates="goals")
 
+    def __repr__(self):
+        return f"<Goal id={self.goal_id} amount={self.amount}>"
+
 
 class Budget(Base):
-    @declared_attr.directive
-    def __tablename__(cls):
-        return f"{cls.__name__.lower()}s"
+    __tablename__ = "budgets"
 
     budget_id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     user_id = Column(UUID(as_uuid=True), ForeignKey("users.user_id"), nullable=False)
@@ -63,3 +72,6 @@ class Budget(Base):
     end_date = Column(DateTime, nullable=False)
 
     user = relationship("User", back_populates="budgets")
+
+    def __repr__(self):
+        return f"<Budget id={self.budget_id} amount={self.amount}>"
