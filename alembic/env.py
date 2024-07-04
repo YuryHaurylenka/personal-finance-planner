@@ -18,8 +18,8 @@ if config.config_file_name is not None:
 # add your model's MetaData object here
 # for 'autogenerate' support
 # noinspection PyUnresolvedReferences
-from src.models import Budget, Goal, Transaction, User
-from src.core.config import settings, Base
+from src.core.config import settings
+from src.models import Base
 
 target_metadata = Base.metadata
 
