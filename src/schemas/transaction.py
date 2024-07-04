@@ -1,7 +1,7 @@
 from datetime import datetime
 from typing import Optional
 
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 
 class TransactionBase(BaseModel):
@@ -17,6 +17,7 @@ class TransactionCreate(TransactionBase):
 
 
 class Transaction(TransactionBase):
+    model_config = ConfigDict(from_attributes=True)
     id: int
     owner_id: int
 

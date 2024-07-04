@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 
 class BudgetBase(BaseModel):
@@ -9,9 +9,8 @@ class BudgetBase(BaseModel):
 class BudgetCreate(BudgetBase):
     pass
 
-class BudgetInDB(BudgetBase):
+
+class Budget(BudgetBase):
+    model_config = ConfigDict(from_attributes=True)
     id: int
     owner_id: int
-
-    class Config:
-        orm_mode = True
