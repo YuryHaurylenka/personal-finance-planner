@@ -1,12 +1,9 @@
-import uuid
-
 from sqlalchemy import (
     Column,
     DateTime,
     Float,
     ForeignKey,
     Integer,
-    String,
     Text,
 )
 from sqlalchemy.dialects.postgresql import UUID
@@ -18,7 +15,7 @@ from src.core.config import Base
 class Transaction(Base):
     __tablename__ = "transactions"
 
-    transaction_id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    transaction_id = Column(Integer, primary_key=True, autoincrement=True)
     user_id = Column(UUID(as_uuid=True), ForeignKey("users.user_id"), nullable=False)
     category_id = Column(Integer, ForeignKey("categories.category_id"), nullable=True)
     amount = Column(Float, nullable=False)

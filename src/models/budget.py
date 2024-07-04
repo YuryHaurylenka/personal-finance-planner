@@ -1,10 +1,9 @@
-import uuid
-
 from sqlalchemy import (
     Column,
     DateTime,
     Float,
     ForeignKey,
+    Integer,
     String,
 )
 from sqlalchemy.dialects.postgresql import UUID
@@ -16,7 +15,7 @@ from src.core.config import Base
 class Budget(Base):
     __tablename__ = "budgets"
 
-    budget_id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    budget_id = Column(Integer, primary_key=True, autoincrement=True)
     user_id = Column(UUID(as_uuid=True), ForeignKey("users.user_id"), nullable=False)
     amount = Column(Float, nullable=False)
     category = Column(String, nullable=False)
