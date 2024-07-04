@@ -1,26 +1,35 @@
 import uuid
 from typing import Optional
 
-from pydantic import BaseModel, ConfigDict, EmailStr
+from pydantic import BaseModel, ConfigDict, EmailStr, Field, field_validator
+
+from src.utils.hash_password import hash_password
 
 
 class UserBase(BaseModel):
-    user_id: uuid.UUID
     username: str
     email: EmailStr
-    is_active: bool
 
 
 class UserCreate(UserBase):
-    username: str
-    email: EmailStr
+    password: str
+
+    @field_validator("password")
+    def hashing(cls, password) -> str:
+        return hash_password(password)
 
 
 class UserUpdate(UserBase):
     password: Optional[str]
 
+    @field_validator("password")
+    def hashing(cls, password: Optional[str]) -> Optional[str]:
+        if password is not None:
+            return hash_password(password)
+        return password
+
 
 class User(UserBase):
     model_config = ConfigDict(from_attributes=True)
-    user_id: uuid.UUID
-    hashed_password: str
+    user_id: uuid.UUID = Field(default_factory=uuid.uuid4)
+    password: str
