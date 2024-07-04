@@ -29,6 +29,12 @@ class UserUpdate(UserBase):
         return password
 
 
+class UserUpdatePartial(UserCreate):
+    username: str | None = None
+    email: str | None = None
+    password: uuid.UUID | None = None
+
+
 class User(UserBase):
     model_config = ConfigDict(from_attributes=True)
     user_id: uuid.UUID = Field(default_factory=uuid.uuid4)
