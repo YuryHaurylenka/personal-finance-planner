@@ -15,4 +15,3 @@ class Settings(BaseModel):
 
 
 settings = Settings()
-Base = declarative_base()
