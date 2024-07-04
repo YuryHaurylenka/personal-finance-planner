@@ -1,4 +1,3 @@
-import uuid
 from typing import Annotated
 
 from fastapi import Path, Depends, HTTPException, status
