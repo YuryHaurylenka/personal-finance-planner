@@ -19,6 +19,7 @@ alembic = "^1.13.2"
 pydantic-settings = "^2.3.4"
 python-dotenv = "^1.0.1"
 aiogram = "^3.8.0"
+faker = "^26.0.0"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.2.2"
