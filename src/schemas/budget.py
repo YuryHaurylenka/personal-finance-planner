@@ -11,13 +11,7 @@ class BudgetBase(BaseModel):
     start_date: datetime
     end_date: datetime
 
-    @field_validator("start_date", mode="before")
-    def validate_timestamp(cls, value):
-        if isinstance(value, str):
-            return parse_timestamp(value)
-        return value
-
-    @field_validator("end_date", mode="before")
+    @field_validator("start_date", "end_date", mode="before")
     def validate_timestamp(cls, value):
         if isinstance(value, str):
             return parse_timestamp(value)
