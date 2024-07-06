@@ -37,7 +37,7 @@ class Transaction(Base):
     timestamp: Mapped[datetime] = mapped_column(DateTime, nullable=False)
     description: Mapped[str] = mapped_column(Text, nullable=True)
 
-    user: Mapped["User"] = relationship("User", back_populates="transactions")
+    user: Mapped["User"] = relationship(secondary=user_transaction_association_table, back_populates="transactions")
     category: Mapped["Category"] = relationship(
         "Category", back_populates="transactions"
     )

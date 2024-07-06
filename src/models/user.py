@@ -2,15 +2,13 @@ import uuid
 from typing import TYPE_CHECKING
 
 from sqlalchemy import (
-    Column,
     String,
 )
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from .user_transaction_association import user_transaction_association_table
-
 from .base import Base
+from .user_transaction_association import user_transaction_association_table
 
 if TYPE_CHECKING:
     from .goal import Goal
@@ -29,7 +27,7 @@ class User(Base):
     password: Mapped[str] = mapped_column(String(255), nullable=False)
 
     transactions: Mapped[list["Transaction"]] = relationship(
-        "Transaction", back_populates="user"
+        secondary=user_transaction_association_table, back_populates="users"
     )
     goals: Mapped[list["Goal"]] = relationship("Goal", back_populates="user")
     budgets: Mapped[list["Budget"]] = relationship("Budget", back_populates="user")
