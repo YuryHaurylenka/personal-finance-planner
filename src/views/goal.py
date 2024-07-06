@@ -18,7 +18,7 @@ router = APIRouter(prefix="/goals", tags=["Goals"])
 async def get_goals(
     session: AsyncSession = Depends(db_helper.scoped_session_dependency),
 ):
-    return await crud_goal.get_goal(session=session)
+    return await crud_goal.get_goals(session=session)
 
 
 @router.post(
