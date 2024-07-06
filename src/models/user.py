@@ -1,4 +1,5 @@
 import uuid
+from typing import TYPE_CHECKING
 
 from sqlalchemy import (
     Column,
@@ -7,10 +8,14 @@ from sqlalchemy import (
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from . import Budget, Goal, Transaction
 from .user_transaction_association import user_transaction_association_table
 
 from .base import Base
+
+if TYPE_CHECKING:
+    from .goal import Goal
+    from .budget import Budget
+    from .transaction import Transaction
 
 
 class User(Base):

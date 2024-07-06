@@ -1,4 +1,5 @@
 from datetime import datetime
+from typing import TYPE_CHECKING
 
 from sqlalchemy import (
     Column,
@@ -11,10 +12,13 @@ from sqlalchemy import (
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from . import Category, User
 from .user_transaction_association import user_transaction_association_table
 
 from .base import Base
+
+if TYPE_CHECKING:
+    from .category import Category
+    from .user import User
 
 
 class Transaction(Base):
