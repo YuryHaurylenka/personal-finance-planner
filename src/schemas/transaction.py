@@ -11,7 +11,6 @@ class TransactionBase(BaseModel):
     amount: float
     timestamp: datetime
     description: Optional[str] = None
-    category_id: Optional[int] = None
 
     @field_validator("timestamp", mode="before")
     def validate_timestamp(cls, value):
@@ -22,6 +21,7 @@ class TransactionBase(BaseModel):
 
 class TransactionCreate(TransactionBase):
     user_id: uuid.UUID
+    category_id: Optional[int] = None
 
 
 class TransactionUpdate(TransactionBase):
@@ -40,3 +40,4 @@ class Transaction(TransactionBase):
     model_config = ConfigDict(from_attributes=True)
     transaction_id: int
     user_id: uuid.UUID
+    category_id: Optional[int]

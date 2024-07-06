@@ -11,7 +11,6 @@ class GoalBase(BaseModel):
     amount: float
     description: str
     target_date: datetime
-    category_id: Optional[int] = None
 
     @field_validator("target_date", mode="before")
     def validate_timestamp(cls, value):
@@ -22,6 +21,7 @@ class GoalBase(BaseModel):
 
 class GoalCreate(GoalBase):
     user_id: uuid.UUID
+    category_id: Optional[int] = None
 
 
 class GoalUpdate(GoalBase):
@@ -40,3 +40,4 @@ class Goal(GoalBase):
     model_config = ConfigDict(from_attributes=True)
     goal_id: int
     user_id: uuid.UUID
+    category_id: Optional[int]
