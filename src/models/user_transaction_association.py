@@ -1,4 +1,5 @@
 from sqlalchemy import Column, ForeignKey, Integer, Table, UniqueConstraint
+
 from .base import Base
 
 user_transaction_association_table = Table(

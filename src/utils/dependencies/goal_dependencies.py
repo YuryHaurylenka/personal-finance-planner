@@ -1,9 +1,10 @@
 from typing import Annotated
 
-from fastapi import Path, Depends, HTTPException, status
+from fastapi import Depends, HTTPException, Path, status
 from sqlalchemy.ext.asyncio import AsyncSession
-from src.crud import goal as crud_goal
+
 from src.core import db_helper
+from src.crud import goal as crud_goal
 from src.models import Goal
 
 

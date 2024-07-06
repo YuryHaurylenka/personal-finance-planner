@@ -3,16 +3,15 @@ __all__ = (
     "Transaction",
     "Budget",
     "Goal",
-    "Transaction",
     "Base",
     "Category",
     "user_transaction_association_table",
 )
 
-from .user import User
-from .transaction import Transaction
-from .budget import Budget
-from .goal import Goal
 from .base import Base
+from .budget import Budget
 from .category import Category
+from .goal import Goal
+from .transaction import Transaction
+from .user import User
 from .user_transaction_association import user_transaction_association_table
