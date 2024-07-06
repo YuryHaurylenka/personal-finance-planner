@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from sqlalchemy import (
     Column,
     DateTime,
@@ -7,7 +9,10 @@ from sqlalchemy import (
     Text,
 )
 from sqlalchemy.dialects.postgresql import UUID
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import Mapped, mapped_column, relationship
+
+from . import Category, User
+from .user_transaction_association import user_transaction_association_table
 
 from .base import Base
 
@@ -15,15 +20,24 @@ from .base import Base
 class Transaction(Base):
     __tablename__ = "transactions"
 
-    transaction_id = Column(Integer, primary_key=True, autoincrement=True)
-    user_id = Column(UUID(as_uuid=True), ForeignKey("users.user_id"), nullable=False)
-    category_id = Column(Integer, ForeignKey("categories.category_id"), nullable=True)
-    amount = Column(Float, nullable=False)
-    timestamp = Column(DateTime, nullable=False)
-    description = Column(Text, nullable=True)
+    transaction_id: Mapped[int] = mapped_column(
+        Integer, primary_key=True, autoincrement=True
+    )
+    user_id: Mapped[UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("users.user_id"), nullable=False
+    )
+    category_id: Mapped[int] = mapped_column(
+        Integer, ForeignKey("categories.category_id"), nullable=True
+    )
+    amount: Mapped[float] = mapped_column(Float, nullable=False)
+    timestamp: Mapped[datetime] = mapped_column(DateTime, nullable=False)
+    description: Mapped[str] = mapped_column(Text, nullable=True)
 
-    user = relationship("User", back_populates="transactions")
-    category = relationship("Category", back_populates="transactions")
+    user: Mapped["User"] = relationship("User", back_populates="transactions")
+    category: Mapped["Category"] = relationship(
+        "Category", back_populates="transactions"
+    )
 
-    def __repr__(self):
-        return f"<Transaction id={self.transaction_id} amount={self.amount}>"
+
+def __repr__(self):
+    return f"<Transaction id={self.transaction_id} amount={self.amount}>"
