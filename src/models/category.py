@@ -8,6 +8,7 @@ from .base import Base
 if TYPE_CHECKING:
     from .goal import Goal
     from .transaction import Transaction
+    from .budget import Budget
 
 
 class Category(Base):
@@ -22,6 +23,7 @@ class Category(Base):
         "Transaction", back_populates="category"
     )
     goals: Mapped[list["Goal"]] = relationship("Goal", back_populates="category")
+    budgets: Mapped[list["Budget"]] = relationship("Budget", back_populates="category")
 
     def __repr__(self):
         return f"<Category id={self.category_id} name={self.name}>"
