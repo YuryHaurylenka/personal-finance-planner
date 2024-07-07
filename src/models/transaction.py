@@ -12,7 +12,6 @@ from sqlalchemy import (
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from .user_transaction_association import user_transaction_association_table
 
 from .base import Base
 
@@ -37,7 +36,8 @@ class Transaction(Base):
     timestamp: Mapped[datetime] = mapped_column(DateTime, nullable=False)
     description: Mapped[str] = mapped_column(Text, nullable=True)
 
-    user: Mapped["User"] = relationship(secondary=user_transaction_association_table, back_populates="transactions")
+    user: Mapped["User"] = relationship(back_populates="transactions")
+
     category: Mapped["Category"] = relationship(
         "Category", back_populates="transactions"
     )

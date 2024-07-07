@@ -8,7 +8,6 @@ from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from .base import Base
-from .user_transaction_association import user_transaction_association_table
 
 if TYPE_CHECKING:
     from .goal import Goal
@@ -26,9 +25,7 @@ class User(Base):
     email: Mapped[str] = mapped_column(String(32), nullable=False, unique=True)
     password: Mapped[str] = mapped_column(String(255), nullable=False)
 
-    transactions: Mapped[list["Transaction"]] = relationship(
-        secondary=user_transaction_association_table, back_populates="users"
-    )
+    transactions: Mapped["Transaction"] = relationship(back_populates="user")
     goals: Mapped[list["Goal"]] = relationship("Goal", back_populates="user")
     budgets: Mapped[list["Budget"]] = relationship("Budget", back_populates="user")
 
