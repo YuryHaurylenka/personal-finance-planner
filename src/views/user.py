@@ -16,11 +16,7 @@ async def get_users(
     return await crud_user.get_users(session=session)
 
 
-@router.post(
-    "/",
-    response_model=User,
-    status_code=status.HTTP_201_CREATED,
-)
+@router.post("/", response_model=User, status_code=status.HTTP_201_CREATED)
 async def create_user(
     user_in: UserCreate,
     session: AsyncSession = Depends(db_helper.scoped_session_dependency),
@@ -55,7 +51,10 @@ async def update_user_partial(
     session: AsyncSession = Depends(db_helper.scoped_session_dependency),
 ):
     return await crud_user.update_user(
-        session=session, user=user, user_update=user_update, partial=True
+        session=session,
+        user=user,
+        user_update=user_update,
+        partial=True,
     )
 
 
