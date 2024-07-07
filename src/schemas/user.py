@@ -40,4 +40,4 @@ class User(UserBase):
     model_config = ConfigDict(from_attributes=True)
     user_id: uuid.UUID = Field(default_factory=uuid.uuid4)
     password: bytes
-    # is_active: bool
+    is_active: bool
