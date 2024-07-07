@@ -12,18 +12,18 @@ class UserBase(BaseModel):
 
 
 class UserCreate(UserBase):
-    password: str
+    password: bytes
 
     @field_validator("password")
-    def hashing(cls, password) -> str:
+    def hashing(cls, password) -> bytes:
         return hash_password(password)
 
 
 class UserUpdate(UserBase):
-    password: Optional[str]
+    password: Optional[bytes]
 
     @field_validator("password")
-    def hashing(cls, password: Optional[str]) -> Optional[str]:
+    def hashing(cls, password: Optional[bytes]) -> Optional[bytes]:
         if password is not None:
             return hash_password(password)
         return password
@@ -32,10 +32,12 @@ class UserUpdate(UserBase):
 class UserUpdatePartial(UserCreate):
     username: str | None = None
     email: str | None = None
-    password: uuid.UUID | None = None
+    password: bytes | None = None
+    is_active: bool | None = None
 
 
 class User(UserBase):
     model_config = ConfigDict(from_attributes=True)
     user_id: uuid.UUID = Field(default_factory=uuid.uuid4)
-    password: str
+    password: bytes
+    # is_active: bool

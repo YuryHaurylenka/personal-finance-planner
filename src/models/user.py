@@ -4,7 +4,7 @@ from typing import TYPE_CHECKING
 from sqlalchemy import (
     String,
 )
-from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy.dialects.postgresql import BYTEA, UUID
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from .base import Base
@@ -23,7 +23,10 @@ class User(Base):
     )
     username: Mapped[str] = mapped_column(String(32), nullable=False, unique=True)
     email: Mapped[str] = mapped_column(String(32), nullable=False, unique=True)
-    password: Mapped[str] = mapped_column(String(255), nullable=False)
+    password: Mapped[bytes] = mapped_column(BYTEA, nullable=False)
+    is_active: Mapped[bool] = mapped_column(
+        default=True, nullable=False, server_default="True"
+    )
 
     transactions: Mapped["Transaction"] = relationship(back_populates="user")
     goals: Mapped[list["Goal"]] = relationship("Goal", back_populates="user")
