@@ -27,7 +27,7 @@ class UserManager(UUIDIDMixin, BaseUserManager[User, UserIdType]):
     ):
         log.warning(
             "User %r has registered.",
-            user.id,
+            user.user_id,
         )
 
     async def on_after_request_verify(
@@ -38,7 +38,7 @@ class UserManager(UUIDIDMixin, BaseUserManager[User, UserIdType]):
     ):
         log.warning(
             "Verification requested for user %r. Verification token: %r",
-            user.id,
+            user.user_id,
             token,
         )
 
@@ -50,6 +50,6 @@ class UserManager(UUIDIDMixin, BaseUserManager[User, UserIdType]):
     ):
         log.warning(
             "User %r has forgot their password. Reset token: %r",
-            user.id,
+            user.user_id,
             token,
         )
