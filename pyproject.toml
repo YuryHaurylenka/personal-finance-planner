@@ -1,0 +1,31 @@
+[tool.poetry]
+name = "personal-finance-planner"
+version = "0.1.0"
+description = ""
+authors = ["HaurylenkaYury <gshshaaha@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+package-mode = false
+
+[tool.poetry.dependencies]
+python = "^3.11"
+fastapi = "^0.111.0"
+uvicorn = { extras = ["standard"], version = "^0.30.1" }
+pydantic = "2.7"
+sqlalchemy = { extras = ["asyncio"], version = "^2.0.31" }
+psycopg2-binary = "^2.9.9"
+bcrypt = "^4.1.3"
+alembic = "^1.13.2"
+pydantic-settings = "^2.3.4"
+python-dotenv = "^1.0.1"
+aiogram = "^3.8.0"
+faker = "^26.0.0"
+pyjwt = {extras = ["crypto"], version = "^2.8.0"}
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.2.2"
+black = "^24.4.2"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
