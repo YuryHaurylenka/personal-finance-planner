@@ -9,7 +9,7 @@ from src.schemas.transaction import (
     TransactionUpdate,
     TransactionUpdatePartial,
 )
-from src.utils.dependencies.transaction_dependencies import transaction_by_id
+from src.utils.dependencies.models.transaction_dependencies import transaction_by_id
 
 router = APIRouter(prefix="/transactions", tags=["Transactions"])
 

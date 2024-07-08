@@ -9,7 +9,7 @@ from src.schemas.category import (
     CategoryUpdate,
     CategoryUpdatePartial,
 )
-from src.utils.dependencies.category_dependencies import category_by_id
+from src.utils.dependencies.models.category_dependencies import category_by_id
 
 router = APIRouter(prefix="/categories", tags=["Categories"])
 

@@ -9,7 +9,7 @@ from src.schemas.goal import (
     GoalUpdate,
     GoalUpdatePartial,
 )
-from src.utils.dependencies.goal_dependencies import goal_by_id
+from src.utils.dependencies.models.goal_dependencies import goal_by_id
 
 router = APIRouter(prefix="/goals", tags=["Goals"])
 

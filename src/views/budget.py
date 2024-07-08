@@ -9,7 +9,7 @@ from src.schemas.budget import (
     BudgetUpdate,
     BudgetUpdatePartial,
 )
-from src.utils.dependencies.budget_dependencies import budget_by_id
+from src.utils.dependencies.models.budget_dependencies import budget_by_id
 
 router = APIRouter(prefix="/budgets", tags=["Budgets"])
 

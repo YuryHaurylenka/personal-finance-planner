@@ -4,7 +4,7 @@ from typing import Optional
 
 from pydantic import BaseModel, ConfigDict, field_validator
 
-from src.utils.dependencies.parse_timestamp import parse_timestamp
+from src.utils.dependencies.models.parse_timestamp import parse_timestamp
 
 
 class GoalBase(BaseModel):
