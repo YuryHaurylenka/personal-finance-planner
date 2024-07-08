@@ -14,10 +14,15 @@ if TYPE_CHECKING:
     from .goal import Goal
     from .budget import Budget
     from .transaction import Transaction
+    from sqlalchemy.ext.asyncio import AsyncSession
 
 
 class User(Base, SQLAlchemyBaseUserTable):
     __tablename__ = "users"
+
+    @classmethod
+    def get_db(cls, session: "AsyncSession"):
+        return SQLAlchemyUserDatabase(session, User)
 
     user_id: Mapped[UUID] = mapped_column(
         UUID(as_uuid=True), primary_key=True, default=uuid.uuid4
