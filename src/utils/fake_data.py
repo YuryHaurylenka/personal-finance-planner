@@ -18,7 +18,7 @@ async def create_fake_user():
         user_id=uuid.uuid4(),
         username=fake.user_name(),
         email=fake.email(),
-        password=fake.password(),
+        hashed_password=fake.password(),
     )
 
 

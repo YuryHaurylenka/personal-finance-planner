@@ -6,6 +6,7 @@ from sqlalchemy import (
 )
 from sqlalchemy.dialects.postgresql import BYTEA, UUID
 from sqlalchemy.orm import Mapped, mapped_column, relationship
+from fastapi_users.db import SQLAlchemyBaseUserTable, SQLAlchemyUserDatabase
 
 from .base import Base
 
@@ -15,7 +16,7 @@ if TYPE_CHECKING:
     from .transaction import Transaction
 
 
-class User(Base):
+class User(Base, SQLAlchemyBaseUserTable):
     __tablename__ = "users"
 
     user_id: Mapped[UUID] = mapped_column(
@@ -23,7 +24,7 @@ class User(Base):
     )
     username: Mapped[str] = mapped_column(String(32), nullable=False, unique=True)
     email: Mapped[str] = mapped_column(String(32), nullable=False, unique=True)
-    password: Mapped[bytes] = mapped_column(BYTEA, nullable=False)
+    hashed_password: Mapped[str] = mapped_column(String(256), nullable=False)
     is_active: Mapped[bool] = mapped_column(
         default=True, nullable=False, server_default="True"
     )
