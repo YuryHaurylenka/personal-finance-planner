@@ -13,7 +13,7 @@ from sqlalchemy.orm import (
     Mapped,
     mapped_column,
 )
-
+from src.utils.types import UserIdType
 from .base import Base
 
 if TYPE_CHECKING:
@@ -21,7 +21,7 @@ if TYPE_CHECKING:
 
 
 class AccessToken(Base, SQLAlchemyBaseAccessTokenTableUUID):
-    user_id: Mapped[uuid] = mapped_column(
+    user_id: Mapped[UserIdType] = mapped_column(
         UUID(as_uuid=True),
         ForeignKey("users.user_id", ondelete="cascade"),
         nullable=False,
