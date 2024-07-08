@@ -3,7 +3,7 @@ from typing import Optional, TYPE_CHECKING
 
 from fastapi_users import (
     BaseUserManager,
-    IntegerIDMixin,
+    UUIDIDMixin,
 )
 
 from src.core.config import settings
@@ -16,7 +16,7 @@ if TYPE_CHECKING:
 log = logging.getLogger(__name__)
 
 
-class UserManager(IntegerIDMixin, BaseUserManager[User, UserIdType]):
+class UserManager(UUIDIDMixin, BaseUserManager[User, UserIdType]):
     reset_password_token_secret = settings.access_token.reset_password_token_secret
     verification_token_secret = settings.access_token.verification_token_secret
 
