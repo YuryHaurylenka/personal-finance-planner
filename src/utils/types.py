@@ -1,0 +1,3 @@
+import uuid
+
+UserIdType: uuid
