@@ -24,7 +24,6 @@ class ApiPrefix(BaseModel):
 
     @property
     def bearer_token_url(self) -> str:
-        # api/v1/auth/login
         parts = (self.prefix, self.v1.prefix, self.v1.auth, "/login")
         path = "".join(parts)
         # return path[1:]
@@ -64,6 +63,7 @@ class Settings(BaseSettings):
     api: ApiPrefix = ApiPrefix()
     db: DatabaseConfig
     access_token: AccessToken
+    telegram_token: str
 
 
 settings = Settings()
