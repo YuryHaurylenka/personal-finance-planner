@@ -20,10 +20,11 @@ async def get_user(session: AsyncSession, user_id: uuid.UUID) -> User | None:
 
 
 async def create_user(session: AsyncSession, user_in: UserCreate) -> User:
-    user = User(**user_in.model_dump())
+    user_data = user_in.model_dump()
+    user_data["hashed_password"] = user_data.pop("password")
+    user = User(**user_data)
     session.add(user)
     await session.commit()
-    # await session.refresh(user)
     return user
 
 

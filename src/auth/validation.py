@@ -1,19 +1,15 @@
-import secrets
-from fastapi import Depends, HTTPException, Form
+from fastapi import Depends, Form, HTTPException
 from fastapi.security import OAuth2PasswordBearer
 from jwt import InvalidTokenError
-from starlette import status
 from sqlalchemy.ext.asyncio import AsyncSession
+from starlette import status
+
 from src.core import db_helper
+from src.schemas.user import User
 from src.utils.dependencies import user_dependencies
 from src.utils.hash_password import verify_password
-from src.schemas.user import User
-from .helpers import (
-    TOKEN_TYPE_FIELD,
-    ACCESS_TOKEN_TYPE,
-    REFRESH_TOKEN_TYPE,
-)
 from . import jwt_utils as auth_utils
+from .helpers import ACCESS_TOKEN_TYPE, REFRESH_TOKEN_TYPE, TOKEN_TYPE_FIELD
 
 oauth2_scheme = OAuth2PasswordBearer(
     tokenUrl="jwt/login/",
@@ -98,7 +94,7 @@ async def get_current_active_auth_user(
 
 async def validate_auth_user(
     username: str = Form(),
-    password: bytes = Form(),
+    hashed_password: str = Form(),
     session: AsyncSession = Depends(db_helper.scoped_session_dependency),
 ):
     unauthed_exc = HTTPException(
@@ -109,7 +105,7 @@ async def validate_auth_user(
     if user is None:
         raise unauthed_exc
 
-    if not verify_password(password, user.password):
+    if not verify_password(hashed_password, user.hashed_password):
         print(f"Failed password verification for user {username}")
         raise unauthed_exc
 
