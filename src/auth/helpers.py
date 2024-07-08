@@ -8,10 +8,10 @@ from starlette import status
 from . import jwt_utils as auth_utils
 from src.core.config import settings
 from src.schemas.user import User
-from ..core import db_helper
-from ..utils.dependencies import user_dependencies
-from ..utils.hash_password import verify_password
-from ..views.auth import security
+from src.core import db_helper
+from src.utils.dependencies import user_dependencies
+from src.utils.hash_password import verify_password
+from .security import security
 
 TOKEN_TYPE_FIELD = "type"
 ACCESS_TOKEN_TYPE = "access"
@@ -66,7 +66,7 @@ async def authenticate_user(
     session: AsyncSession,
 ) -> User:
     user = await user_dependencies.get_user_by_username(username, session)
-    if user is None or not verify_password(password.encode("utf-8"), user.password):
+    if user is None or not verify_password(password, user.hashed_password):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Invalid username or password",
