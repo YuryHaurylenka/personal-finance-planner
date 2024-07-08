@@ -1,9 +1,17 @@
 from datetime import timedelta
 
+from fastapi import Depends, HTTPException
+from fastapi.security import HTTPBasicCredentials
+from sqlalchemy.ext.asyncio import AsyncSession
+from starlette import status
+
 from . import jwt_utils as auth_utils
 from src.core.config import settings
 from src.schemas.user import User
-
+from ..core import db_helper
+from ..utils.dependencies import user_dependencies
+from ..utils.hash_password import verify_password
+from ..views.auth import security
 
 TOKEN_TYPE_FIELD = "type"
 ACCESS_TOKEN_TYPE = "access"
@@ -50,3 +58,25 @@ def create_refresh_token(user: User) -> str:
         token_data=jwt_payload,
         expire_timedelta=timedelta(days=settings.auth_jwt.refresh_token_expire_days),
     )
+
+
+async def authenticate_user(
+    username: str,
+    password: str,
+    session: AsyncSession,
+) -> User:
+    user = await user_dependencies.get_user_by_username(username, session)
+    if user is None or not verify_password(password.encode("utf-8"), user.password):
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid username or password",
+            headers={"WWW-Authenticate": "Basic"},
+        )
+    return user
+
+
+async def get_current_user(
+    credentials: HTTPBasicCredentials = Depends(security),
+    session: AsyncSession = Depends(db_helper.scoped_session_dependency),
+) -> User:
+    return await authenticate_user(credentials.username, credentials.password, session)
