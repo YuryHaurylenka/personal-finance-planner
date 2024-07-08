@@ -1,4 +1,5 @@
 import uuid
+from sqlalchemy.future import select
 from typing import Annotated
 
 from fastapi import Depends, HTTPException, Path, status
@@ -21,3 +22,11 @@ async def user_by_id(
         status_code=status.HTTP_404_NOT_FOUND,
         detail=f"User {user_id} not found!",
     )
+
+
+async def get_user_by_username(
+    username: Annotated[str, Path],
+    session: AsyncSession,
+) -> User:
+    result = await session.execute(select(User).filter(User.username == username))
+    return result.scalars().one_or_none()
