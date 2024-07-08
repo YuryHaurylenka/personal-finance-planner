@@ -9,7 +9,7 @@ router = APIRouter(prefix="/create_fake_data", tags=["FakeData"])
 
 @router.post("/create-fake-data/", status_code=status.HTTP_201_CREATED)
 async def generate_fake_data(
-    amount: int, session: AsyncSession = Depends(db_helper.session_dependency)
+    amount: int, session: AsyncSession = Depends(db_helper.session_getter)
 ):
     if amount <= 0:
         raise HTTPException(

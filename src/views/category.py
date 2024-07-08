@@ -16,7 +16,7 @@ router = APIRouter(prefix="/categories", tags=["Categories"])
 
 @router.get("/", response_model=list[Category])
 async def get_categories(
-    session: AsyncSession = Depends(db_helper.scoped_session_dependency),
+    session: AsyncSession = Depends(db_helper.session_getter),
 ):
     return await crud_category.get_categories(session=session)
 
@@ -28,7 +28,7 @@ async def get_categories(
 )
 async def create_category(
     category_in: CategoryCreate,
-    session: AsyncSession = Depends(db_helper.scoped_session_dependency),
+    session: AsyncSession = Depends(db_helper.session_getter),
 ):
     return await crud_category.create_category(session=session, category_in=category_in)
 
@@ -44,7 +44,7 @@ async def get_category(
 async def update_category(
     category_update: CategoryUpdate,
     category: Category = Depends(category_by_id),
-    session: AsyncSession = Depends(db_helper.scoped_session_dependency),
+    session: AsyncSession = Depends(db_helper.session_getter),
 ):
     return await crud_category.update_category(
         session=session,
@@ -57,7 +57,7 @@ async def update_category(
 async def update_category_partial(
     category_update: CategoryUpdatePartial,
     category: Category = Depends(category_by_id),
-    session: AsyncSession = Depends(db_helper.scoped_session_dependency),
+    session: AsyncSession = Depends(db_helper.session_getter),
 ):
     return await crud_category.update_category(
         session=session,
@@ -70,6 +70,6 @@ async def update_category_partial(
 @router.delete("/{category_id}/", status_code=status.HTTP_204_NO_CONTENT)
 async def delete_category(
     category: Category = Depends(category_by_id),
-    session: AsyncSession = Depends(db_helper.scoped_session_dependency),
+    session: AsyncSession = Depends(db_helper.session_getter),
 ) -> None:
     await crud_category.delete_category(session=session, category=category)

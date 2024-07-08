@@ -16,7 +16,7 @@ router = APIRouter(prefix="/transactions", tags=["Transactions"])
 
 @router.get("/", response_model=list[Transaction])
 async def get_transactions(
-    session: AsyncSession = Depends(db_helper.scoped_session_dependency),
+    session: AsyncSession = Depends(db_helper.session_getter),
 ):
     return await crud_transaction.get_transactions(session=session)
 
@@ -28,7 +28,7 @@ async def get_transactions(
 )
 async def create_transaction(
     transaction_in: TransactionCreate,
-    session: AsyncSession = Depends(db_helper.scoped_session_dependency),
+    session: AsyncSession = Depends(db_helper.session_getter),
 ):
     return await crud_transaction.create_transaction(
         session=session, transaction_in=transaction_in
@@ -46,7 +46,7 @@ async def get_transaction(
 async def update_transaction(
     transaction_update: TransactionUpdate,
     transaction: Transaction = Depends(transaction_by_id),
-    session: AsyncSession = Depends(db_helper.scoped_session_dependency),
+    session: AsyncSession = Depends(db_helper.session_getter),
 ):
     return await crud_transaction.update_transaciton(
         session=session,
@@ -59,7 +59,7 @@ async def update_transaction(
 async def update_transaction_partial(
     transaction_update: TransactionUpdatePartial,
     transaction: Transaction = Depends(transaction_by_id),
-    session: AsyncSession = Depends(db_helper.scoped_session_dependency),
+    session: AsyncSession = Depends(db_helper.session_getter),
 ):
     return await crud_transaction.update_transaciton(
         session=session,
@@ -72,6 +72,6 @@ async def update_transaction_partial(
 @router.delete("/{transaction_id}/", status_code=status.HTTP_204_NO_CONTENT)
 async def delete_transaction(
     transaction: Transaction = Depends(transaction_by_id),
-    session: AsyncSession = Depends(db_helper.scoped_session_dependency),
+    session: AsyncSession = Depends(db_helper.session_getter),
 ) -> None:
     await crud_transaction.delete_transaction(session=session, transaction=transaction)

@@ -10,7 +10,7 @@ from src.models import Goal
 
 async def goal_by_id(
     goal_id: Annotated[int, Path],
-    session: AsyncSession = Depends(db_helper.scoped_session_dependency),
+    session: AsyncSession = Depends(db_helper.session_getter),
 ) -> Goal:
     goal = await crud_goal.get_goal(session=session, goal_id=goal_id)
     if goal is not None:

@@ -10,7 +10,7 @@ from src.models import Budget
 
 async def budget_by_id(
     budget_id: Annotated[int, Path],
-    session: AsyncSession = Depends(db_helper.scoped_session_dependency),
+    session: AsyncSession = Depends(db_helper.session_getter),
 ) -> Budget:
     budget = await crud_budget.get_budget(session=session, budget_id=budget_id)
     if budget is not None:

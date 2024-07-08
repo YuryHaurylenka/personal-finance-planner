@@ -10,7 +10,7 @@ from src.models import Transaction
 
 async def transaction_by_id(
     transaction_id: Annotated[int, Path],
-    session: AsyncSession = Depends(db_helper.scoped_session_dependency),
+    session: AsyncSession = Depends(db_helper.session_getter),
 ) -> Transaction:
     transaction = await crud_transaction.get_transaction(
         session=session, transaction_id=transaction_id

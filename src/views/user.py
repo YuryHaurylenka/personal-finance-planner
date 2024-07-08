@@ -11,7 +11,7 @@ router = APIRouter(prefix="/users", tags=["Users"])
 
 @router.get("/", response_model=list[User])
 async def get_users(
-    session: AsyncSession = Depends(db_helper.scoped_session_dependency),
+    session: AsyncSession = Depends(db_helper.session_getter),
 ):
     return await crud_user.get_users(session=session)
 
@@ -19,7 +19,7 @@ async def get_users(
 @router.post("/", response_model=User, status_code=status.HTTP_201_CREATED)
 async def create_user(
     user_in: UserCreate,
-    session: AsyncSession = Depends(db_helper.scoped_session_dependency),
+    session: AsyncSession = Depends(db_helper.session_getter),
 ):
     return await crud_user.create_user(session=session, user_in=user_in)
 
@@ -35,7 +35,7 @@ async def get_user(
 async def update_user(
     user_update: UserUpdate,
     user: User = Depends(user_by_id),
-    session: AsyncSession = Depends(db_helper.scoped_session_dependency),
+    session: AsyncSession = Depends(db_helper.session_getter),
 ):
     return await crud_user.update_user(
         session=session,
@@ -48,7 +48,7 @@ async def update_user(
 async def update_user_partial(
     user_update: UserUpdatePartial,
     user: User = Depends(user_by_id),
-    session: AsyncSession = Depends(db_helper.scoped_session_dependency),
+    session: AsyncSession = Depends(db_helper.session_getter),
 ):
     return await crud_user.update_user(
         session=session,
@@ -61,6 +61,6 @@ async def update_user_partial(
 @router.delete("/{user_id}/", status_code=status.HTTP_204_NO_CONTENT)
 async def delete_user(
     user: User = Depends(user_by_id),
-    session: AsyncSession = Depends(db_helper.scoped_session_dependency),
+    session: AsyncSession = Depends(db_helper.session_getter),
 ) -> None:
     await crud_user.delete_user(session=session, user=user)

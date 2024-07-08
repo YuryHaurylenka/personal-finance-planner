@@ -10,7 +10,7 @@ from src.models import Category
 
 async def category_by_id(
     category_id: Annotated[int, Path],
-    session: AsyncSession = Depends(db_helper.scoped_session_dependency),
+    session: AsyncSession = Depends(db_helper.session_getter),
 ) -> Category:
     category = await crud_category.get_category(
         session=session, category_id=category_id

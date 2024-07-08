@@ -16,7 +16,7 @@ router = APIRouter(prefix="/goals", tags=["Goals"])
 
 @router.get("/", response_model=list[Goal])
 async def get_goals(
-    session: AsyncSession = Depends(db_helper.scoped_session_dependency),
+    session: AsyncSession = Depends(db_helper.session_getter),
 ):
     return await crud_goal.get_goals(session=session)
 
@@ -28,7 +28,7 @@ async def get_goals(
 )
 async def create_goal(
     goal_in: GoalCreate,
-    session: AsyncSession = Depends(db_helper.scoped_session_dependency),
+    session: AsyncSession = Depends(db_helper.session_getter),
 ):
     return await crud_goal.create_goal(session=session, goal_in=goal_in)
 
@@ -44,7 +44,7 @@ async def get_goal(
 async def udpate_goal(
     goal_update: GoalUpdate,
     goal: Goal = Depends(goal_by_id),
-    session: AsyncSession = Depends(db_helper.scoped_session_dependency),
+    session: AsyncSession = Depends(db_helper.session_getter),
 ):
     return await crud_goal.update_goal(
         session=session,
@@ -57,7 +57,7 @@ async def udpate_goal(
 async def udpate_goal_partial(
     goal_update: GoalUpdatePartial,
     goal: Goal = Depends(goal_by_id),
-    session: AsyncSession = Depends(db_helper.scoped_session_dependency),
+    session: AsyncSession = Depends(db_helper.session_getter),
 ):
     return await crud_goal.update_goal(
         session=session,
@@ -70,6 +70,6 @@ async def udpate_goal_partial(
 @router.delete("/{goal_id}/", status_code=status.HTTP_204_NO_CONTENT)
 async def delete_goal(
     goal: Goal = Depends(goal_by_id),
-    session: AsyncSession = Depends(db_helper.scoped_session_dependency),
+    session: AsyncSession = Depends(db_helper.session_getter),
 ) -> None:
     await crud_goal.delete_goal(session=session, goal=goal)
