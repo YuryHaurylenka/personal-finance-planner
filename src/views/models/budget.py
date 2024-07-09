@@ -12,7 +12,7 @@ from src.schemas.budget import (
 )
 from src.utils.dependencies.models.budget_dependencies import budget_by_id
 
-router = APIRouter(prefix=settings.api.v1.users, tags=["Budgets"])
+router = APIRouter(prefix=settings.api.v1.budgets, tags=["Budgets"])
 
 
 @router.get("/", response_model=list[Budget])

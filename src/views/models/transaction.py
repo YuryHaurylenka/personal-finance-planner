@@ -12,7 +12,7 @@ from src.schemas.transaction import (
 )
 from src.utils.dependencies.models.transaction_dependencies import transaction_by_id
 
-router = APIRouter(prefix=settings.api.v1.users, tags=["Transactions"])
+router = APIRouter(prefix=settings.api.v1.transactions, tags=["Transactions"])
 
 
 @router.get("/", response_model=list[Transaction])

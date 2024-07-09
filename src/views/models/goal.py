@@ -12,7 +12,7 @@ from src.schemas.goal import (
 )
 from src.utils.dependencies.models.goal_dependencies import goal_by_id
 
-router = APIRouter(prefix=settings.api.v1.users, tags=["Goals"])
+router = APIRouter(prefix=settings.api.v1.goals, tags=["Goals"])
 
 
 @router.get("/", response_model=list[Goal])

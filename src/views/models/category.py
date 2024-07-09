@@ -12,7 +12,7 @@ from src.schemas.category import (
 )
 from src.utils.dependencies.models.category_dependencies import category_by_id
 
-router = APIRouter(prefix=settings.api.v1.users, tags=["Categories"])
+router = APIRouter(prefix=settings.api.v1.categories, tags=["Categories"])
 
 
 @router.get("/", response_model=list[Category])
