@@ -15,6 +15,10 @@ class ApiV1Prefix(BaseModel):
     prefix: str = "/v1"
     auth: str = "/auth"
     users: str = "/users"
+    transactions: str = "/transactions"
+    budgets: str = "/budgets"
+    categories: str = "/categories"
+    goals: str = "/goals"
     messages: str = "/messages"
 
 
