@@ -1,13 +1,41 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter
 
-from src.schemas.user import User
+from src.core.config import settings
+from src.schemas.user import UserCreate, UserRead
+from src.utils.dependencies.auth import authentication_backend
+from src.utils.dependencies.auth.fastapi_users import fastapi_users
 
-router = APIRouter(prefix="/auth", tags=["Auth"])
+router = APIRouter(
+    prefix=settings.api.v1.auth,
+    tags=["Auth"],
+)
+
+# /login
+# /logout
+router.include_router(
+    router=fastapi_users.get_auth_router(
+        authentication_backend,
+        # requires_verification=True,
+    ),
+)
 
 
-# @router.get("/basic-auth-username/")
-# async def basic_auth_username(auth_user: User = Depends(get_current_user)):
-#     return {
-#         "message": f"Hi, {auth_user.username}!",
-#         "username": auth_user.username,
-#     }
+# /register
+router.include_router(
+    router=fastapi_users.get_register_router(
+        UserRead,
+        UserCreate,
+    ),
+)
+
+# /request-verify-token
+# /verify
+router.include_router(
+    router=fastapi_users.get_verify_router(UserRead),
+)
+
+# /forgot-password
+# /reset-password
+router.include_router(
+    router=fastapi_users.get_reset_password_router(),
+)
