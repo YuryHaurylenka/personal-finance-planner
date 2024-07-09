@@ -2,6 +2,7 @@ from fastapi import APIRouter, Depends, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.core import db_helper
+from src.core.config import settings
 from src.crud import goal as crud_goal
 from src.schemas.goal import (
     Goal,
@@ -11,7 +12,7 @@ from src.schemas.goal import (
 )
 from src.utils.dependencies.models.goal_dependencies import goal_by_id
 
-router = APIRouter(prefix="/goals", tags=["Goals"])
+router = APIRouter(prefix=settings.api.v1.users, tags=["Goals"])
 
 
 @router.get("/", response_model=list[Goal])

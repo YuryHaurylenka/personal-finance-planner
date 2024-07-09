@@ -2,6 +2,7 @@ from fastapi import APIRouter, Depends, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.core import db_helper
+from src.core.config import settings
 from src.crud import transaction as crud_transaction
 from src.schemas.transaction import (
     Transaction,
@@ -11,7 +12,7 @@ from src.schemas.transaction import (
 )
 from src.utils.dependencies.models.transaction_dependencies import transaction_by_id
 
-router = APIRouter(prefix="/transactions", tags=["Transactions"])
+router = APIRouter(prefix=settings.api.v1.users, tags=["Transactions"])
 
 
 @router.get("/", response_model=list[Transaction])

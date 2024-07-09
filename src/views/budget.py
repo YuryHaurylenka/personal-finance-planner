@@ -2,6 +2,7 @@ from fastapi import APIRouter, Depends, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.core import db_helper
+from src.core.config import settings
 from src.crud import budget as crud_budget
 from src.schemas.budget import (
     Budget,
@@ -11,7 +12,7 @@ from src.schemas.budget import (
 )
 from src.utils.dependencies.models.budget_dependencies import budget_by_id
 
-router = APIRouter(prefix="/budgets", tags=["Budgets"])
+router = APIRouter(prefix=settings.api.v1.users, tags=["Budgets"])
 
 
 @router.get("/", response_model=list[Budget])

@@ -2,6 +2,7 @@ from fastapi import APIRouter, Depends, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.core import db_helper
+from src.core.config import settings
 from src.crud import category as crud_category
 from src.schemas.category import (
     Category,
@@ -11,7 +12,7 @@ from src.schemas.category import (
 )
 from src.utils.dependencies.models.category_dependencies import category_by_id
 
-router = APIRouter(prefix="/categories", tags=["Categories"])
+router = APIRouter(prefix=settings.api.v1.users, tags=["Categories"])
 
 
 @router.get("/", response_model=list[Category])
